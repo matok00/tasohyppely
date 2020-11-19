@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 
@@ -7,9 +8,12 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D myRigidBody;
     public BoxCollider2D myBody;
+    public CircleCollider2D myFeet;
 
-    public float horizontalMovement = 0f;
-    public float moveSpeed = 5f;
+    private float horizontalMovement = 0f;
+    private float moveSpeed = 5f;
+    private float jumpForce = 7f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,11 +33,23 @@ public class PlayerMovement : MonoBehaviour
         {
           FlipPlayer(flipX);
         }
+
+        if (Input.GetButtonDown("Jump") && myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+          myRigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        }
+
+        if (transform.position.y < -30)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
+
+
 
     public void FlipPlayer(float x)
     {
-         transform.localScale = new Vector2(x, transform.localScale.y); 
+         transform.localScale = new Vector2(x, transform.localScale.y);
     }
 
     private void FixedUpdate()
