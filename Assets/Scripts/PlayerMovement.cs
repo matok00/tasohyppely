@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     {
        myRigidBody = GetComponent<Rigidbody2D>();
        myBody = GetComponent<BoxCollider2D>();
+       myFeet = GetComponent<CircleCollider2D>();
     }
 
     // Update is called once per frame
